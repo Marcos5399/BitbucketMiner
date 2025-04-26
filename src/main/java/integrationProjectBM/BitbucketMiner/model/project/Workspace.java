@@ -1,20 +1,11 @@
 
 package integrationProjectBM.BitbucketMiner.model.project;
 
-import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "type",
-    "uuid",
-    "name",
-    "slug",
-    "links"
-})
-@Generated("jsonschema2pojo")
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Workspace {
 
     @JsonProperty("type")
