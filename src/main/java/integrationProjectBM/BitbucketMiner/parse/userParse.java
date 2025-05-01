@@ -4,6 +4,7 @@ import integrationProjectBM.BitbucketMiner.model.issue.Assignee;
 import integrationProjectBM.BitbucketMiner.model.issue.Reporter;
 import integrationProjectBM.BitbucketMiner.model.user.User;
 
+//comentario para commit
 public class userParse {
 
     private String id;
