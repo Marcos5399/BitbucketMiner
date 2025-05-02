@@ -3,7 +3,6 @@ package integrationProjectBM.BitbucketMiner.parse;
 import integrationProjectBM.BitbucketMiner.model.commit.Commit;
 import integrationProjectBM.BitbucketMiner.model.issue.Issue;
 import integrationProjectBM.BitbucketMiner.model.project.Project;
-import integrationProjectBM.BitbucketMiner.service.issueService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +11,8 @@ public class projectParse {
     private String id;
     private String name;
     private String webUrl;
-    private List<Commit> commits;
-    private List<Issue> issues;
+    private List<commitParse> commits;
+    private List<issueParse> issues;
 
 
     public String getId() {
@@ -40,23 +39,23 @@ public class projectParse {
         this.webUrl = webUrl;
     }
 
-    public List<Commit> getCommits() {
+    public List<commitParse> getCommits() {
         return commits;
     }
 
-    public void setCommits(List<Commit> commits) {
+    public void setCommits(List<commitParse> commits) {
         this.commits = commits;
     }
 
-    public List<Issue> getIssues() {
+    public List<issueParse> getIssues() {
         return issues;
     }
 
-    public void setIssues(List<Issue> issues) {
+    public void setIssues(List<issueParse> issues) {
         this.issues = issues;
     }
 
-    public projectParse toProjectParse(Project project, List<Commit> commits, List<Issue> issues) { //BORRAR DESPUES: tenemos que meterle como parametros lo que obtenemos de getIssue y getCommits
+    public projectParse toProjectParse(Project project, List<commitParse> commits, List<issueParse> issues) { //BORRAR DESPUES: tenemos que meterle como parametros lo que obtenemos de getIssue/getCommits habiendole hecho el parse
         projectParse pp = new projectParse();
         pp.setId(project.getKey());
         pp.setName(project.getName());

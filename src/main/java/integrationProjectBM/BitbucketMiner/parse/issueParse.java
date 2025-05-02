@@ -20,8 +20,8 @@ public class issueParse {
     private String updatedAt;
     private String closedAt;
     private List<String> labels;
-    private Reporter author;
-    private Assignee assignee;
+    private userParse author;
+    private userParse assignee;
     private Integer upvotes;
     private Integer downvotes;
     private String webUrl;
@@ -99,19 +99,19 @@ public class issueParse {
         this.labels = labels;
     }
 
-    public Reporter getAuthor() {
+    public userParse getAuthor() {
         return author;
     }
 
-    public void setAuthor(Reporter author) {
+    public void setAuthor(userParse author) {
         this.author = author;
     }
 
-    public Assignee getAssignee() {
+    public userParse getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(Assignee assignee) {
+    public void setAssignee(userParse assignee) {
         this.assignee = assignee;
     }
 
@@ -149,8 +149,10 @@ public class issueParse {
 
     public issueParse toissueParse(Issue issue) {
         issueParse ip = new issueParse();
+        userParse uPr = new userParse();
+        userParse uPa = new userParse();
         List<String> aux = new ArrayList<>();
-        List<Comments> com = new ArrayList<>();
+        List<Comments> com = new ArrayList<>();  //BORRAR DESPUES: los comentarios que obtengo de issues no se de que manera relacionarlos con nuestra clase comentario
         com.add(issue.getLinks().getComments());
         aux.add(issue.getKind());
         aux.add(issue.getPriority());
@@ -163,8 +165,8 @@ public class issueParse {
         ip.setUpdatedAt(issue.getUpdatedOn());
         ip.setClosedAt(issue.getState().equals("resolved") ? issue.getUpdatedOn() : null);
         ip.setLabels(aux);
-        ip.setAuthor(issue.getReporter()); //BORRAR DESPUES: no tenemos clase user en issue, tenemos clase reporter y assignee que tienen las mismas propiedades.
-        ip.setAssignee(issue.getAssignee());
+        ip.setAuthor(uPr.reporterToUserParse(issue.getReporter())); //BORRAR DESPUES: no tenemos clase user en issue, tenemos clase reporter y assignee que tienen las mismas propiedades.
+        ip.setAssignee(uPa.assigneeToUserParse(issue.getAssignee()));
         ip.setUpvotes(issue.getVotes()); //BORRAR DESPUES: no tenemos clase upvotes ni downvotes
         ip.setDownvotes(issue.getVotes());
         ip.setWebUrl(issue.getLinks().getSelf().getHref());
