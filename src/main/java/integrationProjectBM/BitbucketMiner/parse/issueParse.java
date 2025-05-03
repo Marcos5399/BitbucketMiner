@@ -25,7 +25,7 @@ public class issueParse {
     private Integer upvotes;
     private Integer downvotes;
     private String webUrl;
-    private List<Comments> comments;
+    private List<commentParse> comments;
 
     public String getId() {
         return id;
@@ -139,21 +139,19 @@ public class issueParse {
         this.webUrl = webUrl;
     }
 
-    public List<Comments> getComments() {
+    public List<commentParse> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comments> comments) {
+    public void setComments(List<commentParse> comments) {
         this.comments = comments;
     }
 
-    public issueParse toissueParse(Issue issue) {
+    public issueParse toissueParse(Issue issue, List<commentParse> comments) {
         issueParse ip = new issueParse();
         userParse uPr = new userParse();
         userParse uPa = new userParse();
         List<String> aux = new ArrayList<>();
-        List<Comments> com = new ArrayList<>();  //BORRAR DESPUES: los comentarios que obtengo de issues no se de que manera relacionarlos con nuestra clase comentario
-        com.add(issue.getLinks().getComments());
         aux.add(issue.getKind());
         aux.add(issue.getPriority());
         ip.setId(issue.getId().toString());
@@ -170,7 +168,7 @@ public class issueParse {
         ip.setUpvotes(issue.getVotes()); //BORRAR DESPUES: no tenemos clase upvotes ni downvotes
         ip.setDownvotes(issue.getVotes());
         ip.setWebUrl(issue.getLinks().getSelf().getHref());
-        ip.setComments(com);
+        ip.setComments(comments);
         return ip;
 
 
