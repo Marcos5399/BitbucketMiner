@@ -52,6 +52,7 @@ public class projectController {
         Project project = projectService.getProject(workspace,repo_slug).getBody();
         commitParse cP = new commitParse();
         issueParse iP = new issueParse();
+
         List<commitParse> commits= commitService.getAllCommitsPages(workspace,repo_slug,maxPages).stream().map(c-> cP.toCommitParse(c)).toList().subList(0,nCommits-1);
 
 
