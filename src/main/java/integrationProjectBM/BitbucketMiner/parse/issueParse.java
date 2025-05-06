@@ -6,6 +6,7 @@ import integrationProjectBM.BitbucketMiner.model.issue.Comments;
 import integrationProjectBM.BitbucketMiner.model.issue.Issue;
 import integrationProjectBM.BitbucketMiner.model.issue.Reporter;
 import integrationProjectBM.BitbucketMiner.model.user.User;
+import integrationProjectBM.BitbucketMiner.service.commentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +148,10 @@ public class issueParse {
         this.comments = comments;
     }
 
-    public issueParse toissueParse(Issue issue, List<commentParse> comments) {
+    public issueParse toissueParse(Issue issue, commentService commentService, String workspace, String repo_slug) {
+
+        commentParse cp = new commentParse();
+        List<commentParse> comments = commentService.getcommentsI(workspace,repo_slug,issue.getId().toString()).getBody().getValues().stream().map(c-> cp.toCommentParse(c)).toList();
         issueParse ip = new issueParse();
         userParse uPr = new userParse();
         userParse uPa = new userParse();

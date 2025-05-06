@@ -10,6 +10,7 @@ import integrationProjectBM.BitbucketMiner.service.commitService;
 import integrationProjectBM.BitbucketMiner.service.issueService;
 import integrationProjectBM.BitbucketMiner.service.projectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -54,11 +55,32 @@ public class projectController {
         issueParse iP = new issueParse();
 
         List<commitParse> commits= commitService.getAllCommitsPages(workspace,repo_slug,maxPages).stream().map(c-> cP.toCommitParse(c)).toList().subList(0,nCommits-1);
+        List<issueParse> issues = issueService.getIssuesPages(workspace,repo_slug,maxPages).stream().map(i-> iP.toissueParse(i,commentService,workspace,repo_slug)).toList().subList(0,nIssues-1);
+
+    return new projectParse().toProjectParse(project,commits,issues);
 
 
 
+    }
+
+    @PostMapping("/{workspace}/{repo_slug}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public projectParse createProject(@PathVariable String workspace, @PathVariable String repo_slug,
+                                      @RequestParam(required = false, name = "nCommits", defaultValue = "5") Integer nCommits,
+                                      @RequestParam(required = false, name = "nIssues", defaultValue = "5") Integer nIssues,
+                                      @RequestParam(required = false, name = "maxPages", defaultValue = "2") Integer maxPages){
 
 
+        Project project = projectService.getProject(workspace,repo_slug).getBody();
+        commitParse cP = new commitParse();
+        issueParse iP = new issueParse();
+
+        List<commitParse> commits= commitService.getAllCommitsPages(workspace,repo_slug,maxPages).stream().map(c-> cP.toCommitParse(c)).toList().subList(0,nCommits-1);
+        List<issueParse> issues = issueService.getIssuesPages(workspace,repo_slug,maxPages).stream().map(i-> iP.toissueParse(i,commentService,workspace,repo_slug)).toList().subList(0,nIssues-1);
+
+        projectParse projectParse = new projectParse().toProjectParse(project,commits,issues);
+
+        return projectService.sendProjectToGitMiner(projectParse).getBody();
     }
 
 }
