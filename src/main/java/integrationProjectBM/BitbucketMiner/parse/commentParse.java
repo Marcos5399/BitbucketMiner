@@ -59,7 +59,12 @@ public class commentParse {
         cP.setAuthor(uP.userToUserParse(comment.getUser()));
         cP.setBody(comment.getContent().getRaw());
         cP.setCreatedAt(comment.getCreatedOn());
-        cP.setUpdatedAt(comment.getUpdatedOn().toString());
+        if (comment.getUpdatedOn() != null) {
+            cP.setUpdatedAt(comment.getUpdatedOn().toString());
+        } else {
+            cP.setUpdatedAt("");
+        }
+
         return cP;
 
     }

@@ -167,8 +167,13 @@ public class issueParse {
         ip.setUpdatedAt(issue.getUpdatedOn());
         ip.setClosedAt(issue.getState().equals("resolved") ? issue.getUpdatedOn() : null);
         ip.setLabels(aux);
-        ip.setAuthor(uPr.reporterToUserParse(issue.getReporter())); //BORRAR DESPUES: no tenemos clase user en issue, tenemos clase reporter y assignee que tienen las mismas propiedades.
-        ip.setAssignee(uPa.assigneeToUserParse(issue.getAssignee()));
+        ip.setAuthor(uPr.reporterToUserParse(issue.getReporter()));//BORRAR DESPUES: no tenemos clase user en issue, tenemos clase reporter y assignee que tienen las mismas propiedades.
+        if (issue.getAssignee() != null) {
+            ip.setAssignee(uPa.assigneeToUserParse(issue.getAssignee()));
+        }       else {
+            ip.setAssignee(new userParse());
+        }
+
         ip.setUpvotes(issue.getVotes()); //BORRAR DESPUES: no tenemos clase upvotes ni downvotes
         ip.setDownvotes(issue.getVotes());
         ip.setWebUrl(issue.getLinks().getSelf().getHref());
