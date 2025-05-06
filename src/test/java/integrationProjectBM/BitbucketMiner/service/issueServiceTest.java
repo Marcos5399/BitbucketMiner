@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,13 +44,13 @@ class issueServiceTest {
         System.out.println(issues);
     }
 
-    @Test
-    @DisplayName("Sin usar nuestras clases")
-    void getIssuesPrueba() {
 
-        ResponseEntity<String> response = service.getIssuesPrueba("gentlero", "bitbucket-api");
-        String issues = response.getBody();
-        assertNotNull(issues);
-        System.out.println(issues);
+    @Test
+    @DisplayName ("Get issues maxPages")
+    void getIssuesPages() {
+
+        List<Issue> response = service.getIssuesPages("gentlero", "bitbucket-api", 2);
+        assertNotNull(response);
+        System.out.println(response);
     }
 }

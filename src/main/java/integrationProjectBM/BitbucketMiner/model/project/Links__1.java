@@ -1,19 +1,30 @@
 
 package integrationProjectBM.BitbucketMiner.model.project;
 
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Links__1 {
 
+    @JsonProperty("self")
+    private Self__1 self;
     @JsonProperty("avatar")
     private Avatar__1 avatar;
     @JsonProperty("html")
     private Html__1 html;
+
     @JsonProperty("self")
-    private Self__1 self;
+    public Self__1 getSelf() {
+        return self;
+    }
+
+    @JsonProperty("self")
+    public void setSelf(Self__1 self) {
+        this.self = self;
+    }
 
     @JsonProperty("avatar")
     public Avatar__1 getAvatar() {
@@ -35,20 +46,14 @@ public class Links__1 {
         this.html = html;
     }
 
-    @JsonProperty("self")
-    public Self__1 getSelf() {
-        return self;
-    }
-
-    @JsonProperty("self")
-    public void setSelf(Self__1 self) {
-        this.self = self;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(Links__1 .class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("self");
+        sb.append('=');
+        sb.append(((this.self == null)?"<null>":this.self));
+        sb.append(',');
         sb.append("avatar");
         sb.append('=');
         sb.append(((this.avatar == null)?"<null>":this.avatar));
@@ -56,10 +61,6 @@ public class Links__1 {
         sb.append("html");
         sb.append('=');
         sb.append(((this.html == null)?"<null>":this.html));
-        sb.append(',');
-        sb.append("self");
-        sb.append('=');
-        sb.append(((this.self == null)?"<null>":this.self));
         sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');

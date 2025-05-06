@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 
@@ -33,5 +35,15 @@ class commitServiceTest {
         Commit commit = response.getBody();
         assertNotNull(commit);
         System.out.println(commit);
+    }
+
+    @Test
+    @DisplayName("Get all commits maxPages")
+    void getAllCommitsPages() {
+
+        List<Commit> commits = service.getAllCommitsPages("gentlero", "bitbucket-api",2);
+        assertNotNull(commits);
+        System.out.println(commits);
+
     }
 }

@@ -4,7 +4,6 @@ package integrationProjectBM.BitbucketMiner.model.project;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Workspace {
 
@@ -17,7 +16,7 @@ public class Workspace {
     @JsonProperty("slug")
     private String slug;
     @JsonProperty("links")
-    private Links__1 links;
+    private Links__2 links;
 
     @JsonProperty("type")
     public String getType() {
@@ -60,12 +59,12 @@ public class Workspace {
     }
 
     @JsonProperty("links")
-    public Links__1 getLinks() {
+    public Links__2 getLinks() {
         return links;
     }
 
     @JsonProperty("links")
-    public void setLinks(Links__1 links) {
+    public void setLinks(Links__2 links) {
         this.links = links;
     }
 

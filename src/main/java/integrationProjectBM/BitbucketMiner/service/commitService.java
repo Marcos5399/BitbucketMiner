@@ -10,8 +10,10 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class commitService {
@@ -89,6 +91,40 @@ public class commitService {
     }
 
 
+    public List<Commit> getAllCommitsPages (String workspace, String repo_slug, Integer maxPages){
+
+        List<Commit> commits = new ArrayList<>();
+
+        String uri = apipath + workspace +"/" + repo_slug + "/commits";
+
+
+
+
+
+        String auth = username + ":" + token;
+        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+        String authHeader = "Basic " + encodedAuth;
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authHeader);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+
+
+        String nextPageUrl = uri;
+        int currentPage = 1;
+        int pagesNumber = (maxPages != null) ? maxPages : 2;
+
+        while (nextPageUrl != null && currentPage < pagesNumber) {
+            HttpEntity<Issue> request = new HttpEntity<>(null, headers);
+            ResponseEntity<commitResponse> response = restTemplate.exchange(uri, HttpMethod.GET, request, commitResponse.class);
+            commits.addAll(response.getBody().getValues());
+            currentPage++;
+        }
+        return commits;
+
+    }
 
 
 }

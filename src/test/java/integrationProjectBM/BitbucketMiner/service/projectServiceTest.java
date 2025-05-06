@@ -20,20 +20,11 @@ class projectServiceTest {
     @Test
     @DisplayName("Get all projects")
     void getProjects() {
-        ResponseEntity<projectResponse> response = projectService.getProjects("gentlero");
-        projectResponse projects = response.getBody();
+        ResponseEntity<Project> response = projectService.getProject("gentlero", "bitbucket-api");
+        Project projects = response.getBody();
         assertNotNull(projects);
-        System.out.println(projects.getValues());
+        System.out.println(projects);
     }
 
-    @Test
-    @DisplayName("Get a project")
-    void getProject() {
 
-
-        ResponseEntity<Project> response = projectService.getProject("gentlero", "OSS");
-        Project project = response.getBody();
-        assertNotNull(project);
-        System.out.println(project);
-    }
 }

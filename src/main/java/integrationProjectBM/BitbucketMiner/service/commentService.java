@@ -30,36 +30,7 @@ public class commentService {
     private String username;
 
 
-    //coger un issue sin token funciona
-    public ResponseEntity<commentResponse> getcommentsPR (String workspace, String repo_slug, String pull_request_id){
 
-        //cuando quito el id no me sale ningun issue
-
-        String uri = apipath + workspace +"/" + repo_slug + "/pullrequests/"+pull_request_id+"/comments";
-
-        // a partir de aqui es todo el lio con el token
-
-
-
-        // Codificamos en base64 para Basic Auth
-        String auth = username + ":" + token;
-        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
-        String authHeader = "Basic " + encodedAuth;
-
-        // Headers con autenticación
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authHeader);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-
-
-
-
-        HttpEntity<Comment> request = new HttpEntity<>(null, headers);
-        ResponseEntity<commentResponse> response = restTemplate.exchange(uri, HttpMethod.GET,request, commentResponse.class);
-        return response;
-
-    }
 
     public ResponseEntity<commentResponse> getcommentsI (String workspace, String repo_slug, String issue_id){
 

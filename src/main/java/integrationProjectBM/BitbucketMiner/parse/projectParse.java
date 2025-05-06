@@ -1,3 +1,4 @@
+
 package integrationProjectBM.BitbucketMiner.parse;
 
 import integrationProjectBM.BitbucketMiner.model.commit.Commit;
@@ -57,11 +58,13 @@ public class projectParse {
 
     public projectParse toProjectParse(Project project, List<commitParse> commits, List<issueParse> issues) { //BORRAR DESPUES: tenemos que meterle como parametros lo que obtenemos de getIssue/getCommits habiendole hecho el parse
         projectParse pp = new projectParse();
-        pp.setId(project.getKey());
-        pp.setName(project.getName());
+        pp.setId(project.getUuid());
+        pp.setName(project.getName()); // BORRAR DESPUES, PUEDE SER NAME O FULLNAME
         pp.setWebUrl(project.getLinks().getSelf().getHref());
         pp.setCommits(commits);
         pp.setIssues(issues);
         return pp;
     }
 }
+
+

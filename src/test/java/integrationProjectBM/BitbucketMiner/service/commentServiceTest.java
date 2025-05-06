@@ -22,15 +22,7 @@ class commentServiceTest {
 
 
 
-    @Test
-    @DisplayName("Get Comments from a pull request")
-    void getcommentsPR() {
 
-        ResponseEntity<commentResponse> response = service.getcommentsPR("gentlero", "bitbucket-api","82");
-        commentResponse comments = response.getBody();
-        assertNotNull(comments);
-        System.out.println(comments.getValues());
-    }
 
     @Test
     @DisplayName("Get Comments from a issue")
@@ -59,14 +51,13 @@ class commentServiceTest {
     void getallcommits() {
         ResponseEntity<commentResponse> responseC = service.getcommentsC("gentlero", "bitbucket-api","d0b0fcf55f7099d3a43c29dab76631c66d1e5467");
         ResponseEntity<commentResponse> responseI = service.getcommentsI("gentlero", "bitbucket-api","87");
-        ResponseEntity<commentResponse> responsePR = service.getcommentsPR("gentlero", "bitbucket-api","82");
+
 
         commentResponse commentsC = responseC.getBody();
         commentResponse commentsI = responseI.getBody();
-        commentResponse commentsPR = responsePR.getBody();
 
 
-        commentsC.getValues().addAll(commentsPR.getValues());
+
         commentsC.getValues().addAll(commentsI.getValues());
         System.out.println(commentsC.getValues());
 
