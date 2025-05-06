@@ -13,7 +13,6 @@ import java.util.List;
 
 public class issueParse {
     private String id;
-    private String refId;
     private String title;
     private String description;
     private String state;
@@ -23,9 +22,7 @@ public class issueParse {
     private List<String> labels;
     private userParse author;
     private userParse assignee;
-    private Integer upvotes;
-    private Integer downvotes;
-    private String webUrl;
+    private Integer votes;
     private List<commentParse> comments;
 
     public String getId() {
@@ -36,13 +33,6 @@ public class issueParse {
         this.id = id;
     }
 
-    public String getRefId() {
-        return refId;
-    }
-
-    public void setRefId(String refId) {
-        this.refId = refId;
-    }
 
     public String getTitle() {
         return title;
@@ -116,29 +106,14 @@ public class issueParse {
         this.assignee = assignee;
     }
 
-    public Integer getUpvotes() {
-        return upvotes;
+    public Integer getVotes() {
+        return votes;
     }
 
-    public void setUpvotes(Integer upvotes) {
-        this.upvotes = upvotes;
+    public void setVotes(Integer upvotes) {
+        this.votes = upvotes;
     }
 
-    public Integer getDownvotes() {
-        return downvotes;
-    }
-
-    public void setDownvotes(Integer downvotes) {
-        this.downvotes = downvotes;
-    }
-
-    public String getWebUrl() {
-        return webUrl;
-    }
-
-    public void setWebUrl(String webUrl) {
-        this.webUrl = webUrl;
-    }
 
     public List<commentParse> getComments() {
         return comments;
@@ -159,7 +134,6 @@ public class issueParse {
         aux.add(issue.getKind());
         aux.add(issue.getPriority());
         ip.setId(issue.getId().toString());
-        ip.setRefId(issue.getId().toString()); //BORRAR DESPUES: no tengo nada que se llame refid
         ip.setTitle(issue.getTitle());
         ip.setDescription(issue.getContent().getRaw());
         ip.setState(issue.getState());
@@ -174,13 +148,28 @@ public class issueParse {
             ip.setAssignee(new userParse());
         }
 
-        ip.setUpvotes(issue.getVotes()); //BORRAR DESPUES: no tenemos clase upvotes ni downvotes
-        ip.setDownvotes(issue.getVotes());
-        ip.setWebUrl(issue.getLinks().getSelf().getHref());
+        ip.setVotes(issue.getVotes());
         ip.setComments(comments);
         return ip;
 
 
+    }
+    @Override
+    public String toString() {
+        return "issueParse{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", state='" + state + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", closedAt='" + closedAt + '\'' +
+                ", labels=" + (labels != null ? labels.toString() : "null") +
+                ", author=" + (author != null ? author.toString() : "null") +
+                ", assignee=" + (assignee != null ? assignee.toString() : "null") +
+                ", votes=" + votes +
+                ", comments=" + (comments != null ? comments.toString() : "null") +
+                '}';
     }
 
 

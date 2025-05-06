@@ -77,11 +77,25 @@ public class userParse {
 
     public userParse assigneeToUserParse(Assignee assignee){
         userParse up = new userParse();
-        up.setId(assignee.getUuid());
-        up.setUsername(assignee.getNickname());
-        up.setName(assignee.getDisplayName());
-        up.setAvatarUrl(assignee.getLinks().getAvatar().getHref());
-        up.setWebUrl(assignee.getLinks().getSelf().getHref());
+        if(assignee != null){
+            up.setId(assignee.getUuid());
+            up.setUsername(assignee.getNickname());
+            up.setName(assignee.getDisplayName());
+            up.setAvatarUrl(assignee.getLinks().getAvatar().getHref());
+            up.setWebUrl(assignee.getLinks().getSelf().getHref());
+        }
+
         return up;
+    }
+
+    @Override
+    public String toString() {
+        return "userParse{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", webUrl='" + webUrl + '\'' +
+                '}';
     }
 }

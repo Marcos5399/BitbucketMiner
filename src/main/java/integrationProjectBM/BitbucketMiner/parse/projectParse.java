@@ -65,6 +65,16 @@ public class projectParse {
         pp.setIssues(issues);
         return pp;
     }
+    @Override
+    public String toString() {
+        return "projectParse{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", webUrl='" + webUrl + '\'' +
+                ", commits=" + (commits != null ? commits.toString() : "null") +
+                ", issues=" + (issues != null ? issues.toString() : "null") +
+                '}';
+    }
 }
 
 

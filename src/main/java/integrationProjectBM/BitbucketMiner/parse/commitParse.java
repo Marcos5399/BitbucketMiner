@@ -9,9 +9,6 @@ public class commitParse {
     private String authorName;
     private String authorEmail;
     private String authoredDate;
-    private String committerName;
-    private String committerEmail;
-    private String committedDate;
     private String webUrl;
 
 
@@ -63,29 +60,7 @@ public class commitParse {
         this.authoredDate = authoredDate;
     }
 
-    public String getCommitterName() {
-        return committerName;
-    }
 
-    public void setCommitterName(String committerName) {
-        this.committerName = committerName;
-    }
-
-    public String getCommitterEmail() {
-        return committerEmail;
-    }
-
-    public void setCommitterEmail(String committerEmail) {
-        this.committerEmail = committerEmail;
-    }
-
-    public String getCommittedDate() {
-        return committedDate;
-    }
-
-    public void setCommittedDate(String committedDate) {
-        this.committedDate = committedDate;
-    }
 
     public String getWebUrl() {
         return webUrl;
@@ -100,14 +75,24 @@ public class commitParse {
         cp.setId(commit.getHash());
         cp.setTitle(commit.getSummary().getRaw());
         cp.setMessage(commit.getMessage());
-        cp.setAuthorName(commit.getAuthor().getUser().getUsername());
+        cp.setAuthorName(commit.getAuthor().getUser().getNickname());
         cp.setAuthorEmail(commit.getAuthor().getUser().getNickname()); //BORRAR DESPUES: no tenemos el email definido
         cp.setAuthoredDate(commit.getDate());
-        cp.setCommitterName(commit.getAuthor().getUser().getUsername()); //BORRAR DESPUES: no tenemos nada de committer
-        cp.setCommitterEmail(commit.getAuthor().getUser().getNickname()); //BORRAR DESPUES: lo mismo
-        cp.setCommittedDate(commit.getDate()); // BORRAR DESPUES no lo tenemos en nuestra clase esto definido, pongo esto
         cp.setWebUrl(commit.getLinks().getSelf().getHref());
         return cp;
 
+    }
+
+    @Override
+    public String toString() {
+        return "commitParse{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", authorName='" + authorName + '\'' +
+                ", authorEmail='" + authorEmail + '\'' +
+                ", authoredDate='" + authoredDate + '\'' +
+                ", webUrl='" + webUrl + '\'' +
+                '}';
     }
 }

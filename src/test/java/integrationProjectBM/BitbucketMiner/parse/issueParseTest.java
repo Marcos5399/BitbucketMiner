@@ -26,7 +26,7 @@ class issueParseTest {
         issueParse test = new issueParse();
         List<Issue> issues = service.getIssues("gentlero","bitbucket-api").getBody().getValues();
         Issue issue = issues.get(0);
-        System.out.println(test.toissueParse(issue,comments,"gentlero","bitbucket-api"));
+        System.out.println(test.toissueParse(issue,comments,"gentlero","bitbucket-api").getAssignee());
 
     }
 }

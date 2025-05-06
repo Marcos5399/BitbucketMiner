@@ -22,6 +22,7 @@ class commitParseTest {
     void toCommitParse() {
         commitParse test = new commitParse();
         List<Commit> commits = service.getAllCommits("gentlero","bitbucket-api").getBody().getValues();
-        System.out.println(commits.stream().map(c->test.toCommitParse(c)).toList());
+        Commit commit = commits.get(0);
+        System.out.println(test.toCommitParse(commit).getAuthorName());
     }
 }

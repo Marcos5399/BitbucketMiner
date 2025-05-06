@@ -69,4 +69,15 @@ public class commentParse {
 
     }
 
+    @Override
+    public String toString() {
+        return "commentParse{" +
+                "id='" + id + '\'' +
+                ", body='" + body + '\'' +
+                ", author=" + (author != null ? author.toString() : "null") +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                '}';
+    }
+
 }
