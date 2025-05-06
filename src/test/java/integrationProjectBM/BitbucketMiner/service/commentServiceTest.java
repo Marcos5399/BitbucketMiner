@@ -1,15 +1,11 @@
 package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.comment.Comment;
-import integrationProjectBM.BitbucketMiner.response.commentResponse;
-import integrationProjectBM.BitbucketMiner.response.issueResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class commentServiceTest {
 
     @Autowired
-    commentService service;
+    CommentService service;
 
 
 
@@ -27,8 +23,8 @@ class commentServiceTest {
     @Test
     @DisplayName("Get Comments from a issue")
     void getcommentsI() {
-        ResponseEntity<commentResponse> response = service.getcommentsI("gentlero", "bitbucket-api","87");
-        commentResponse comments = response.getBody();
+        ResponseEntity<CommentResponse> response = service.getIssueComment("gentlero", "bitbucket-api","87");
+        CommentResponse comments = response.getBody();
         assertNotNull(comments);
         System.out.println(comments.getValues());
 
@@ -39,8 +35,8 @@ class commentServiceTest {
     @DisplayName("Get Comments from a Commit")
     void getcommentsC() {
 
-        ResponseEntity<commentResponse> response = service.getcommentsC("gentlero", "bitbucket-api","d0b0fcf55f7099d3a43c29dab76631c66d1e5467");
-        commentResponse comments = response.getBody();
+        ResponseEntity<CommentResponse> response = service.getCommitComments("gentlero", "bitbucket-api","d0b0fcf55f7099d3a43c29dab76631c66d1e5467");
+        CommentResponse comments = response.getBody();
         assertNotNull(comments);
         System.out.println(comments.getValues());
 
@@ -49,12 +45,12 @@ class commentServiceTest {
     @Test
     @DisplayName("Get all commits")
     void getallcommits() {
-        ResponseEntity<commentResponse> responseC = service.getcommentsC("gentlero", "bitbucket-api","d0b0fcf55f7099d3a43c29dab76631c66d1e5467");
-        ResponseEntity<commentResponse> responseI = service.getcommentsI("gentlero", "bitbucket-api","87");
+        ResponseEntity<CommentResponse> responseC = service.getCommitComments("gentlero", "bitbucket-api","d0b0fcf55f7099d3a43c29dab76631c66d1e5467");
+        ResponseEntity<CommentResponse> responseI = service.getIssueComment("gentlero", "bitbucket-api","87");
 
 
-        commentResponse commentsC = responseC.getBody();
-        commentResponse commentsI = responseI.getBody();
+        CommentResponse commentsC = responseC.getBody();
+        CommentResponse commentsI = responseI.getBody();
 
 
 
@@ -67,7 +63,7 @@ class commentServiceTest {
     @DisplayName("Get a comment from an issue")
     void getCommentI() {
 
-        ResponseEntity<Comment> response = service.getCommentI("gentlero", "bitbucket-api","87","57887979");
+        ResponseEntity<Comment> response = service.getIssueCommentById("gentlero", "bitbucket-api","87","57887979");
         Comment comments = response.getBody();
         assertNotNull(comments);
         System.out.println(comments);
@@ -77,7 +73,7 @@ class commentServiceTest {
     @DisplayName("Get a comment from a commit")
     void getCommentC() {
 
-        ResponseEntity<Comment> response = service.getcommentC("gentlero", "bitbucket-api","d0b0fcf55f7099d3a43c29dab76631c66d1e5467","");
+        ResponseEntity<Comment> response = service.getCommitCommentById("gentlero", "bitbucket-api","d0b0fcf55f7099d3a43c29dab76631c66d1e5467","");
         Comment comments = response.getBody();
         assertNotNull(comments);
         System.out.println(comments);

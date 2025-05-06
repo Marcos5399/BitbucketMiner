@@ -2,7 +2,6 @@ package integrationProjectBM.BitbucketMiner.service;
 
 
 import integrationProjectBM.BitbucketMiner.model.project.Project;
-import integrationProjectBM.BitbucketMiner.response.projectResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class projectServiceTest {
 
     @Autowired
-    private projectService projectService;
+    private ProjectService projectService;
 
     @Test
     @DisplayName("Get all projects")

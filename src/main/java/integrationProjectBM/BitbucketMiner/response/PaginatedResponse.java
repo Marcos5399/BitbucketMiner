@@ -1,17 +1,15 @@
 package integrationProjectBM.BitbucketMiner.response;
 
-import integrationProjectBM.BitbucketMiner.model.user.User;
-
 import java.util.List;
 
-public class userResponse {
+public class PaginatedResponse<T> {
     private int pagelen;
     private int page;
     private int size;
-    private List<User> values;
+    private String next;
+    private List<T> values;
 
     // Getters y Setters
-
     public int getPagelen() {
         return pagelen;
     }
@@ -36,11 +34,20 @@ public class userResponse {
         this.size = size;
     }
 
-    public List<User> getValues() {
+    public String getNext() {
+        return next;
+    }
+
+    public void setNext(String next) {
+        this.next = next;
+    }
+
+    public List<T> getValues() {
         return values;
     }
 
-    public void setValues(List<User> values) {
+    public void setValues(List<T> values) {
         this.values = values;
     }
 }
+

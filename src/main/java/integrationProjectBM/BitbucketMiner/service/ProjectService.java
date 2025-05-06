@@ -3,8 +3,7 @@ package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.project.Project;
 
-import integrationProjectBM.BitbucketMiner.parse.projectParse;
-import integrationProjectBM.BitbucketMiner.response.projectResponse;
+import integrationProjectBM.BitbucketMiner.parse.ProjectBitbucketMiner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,35 +15,29 @@ import java.util.Base64;
 import java.util.Collections;
 
 @Service
-public class projectService {
+public class ProjectService {
 
    @Autowired
    RestTemplate restTemplate;
 
-    @Value("https://api.bitbucket.org/2.0/repositories/")
-    private String apipath;
+    @Value("${bitbucket.baseuri}")
+    private String baseUri;
 
-    @Value("ATBBUCLz82bW4fub2CuKLk4Dd76L398E9DF4")
+    @Value("${bitbucket.token}")
     private String token;
-    @Value("lorenvalderramaroman")
+    @Value("${bitbucket.username}")
     private String username;
-
 
     @Value("${gitminer.baseuri}")
     private String baseUriGitMiner;
 
 
     //coger un issue sin token funciona
-    public ResponseEntity<Project> getProject (String workspace, String repo_slug){
+    public ResponseEntity<Project> getProject (String workspace, String repoSlug){
 
         //cuando quito el id no me sale ningun issue
 
-        String uri = apipath + workspace + "/" + repo_slug ;
-
-        // a partir de aqui es todo el lio con el token
-
-
-
+        String uri = baseUri + workspace + "/" + repoSlug ;
         // Codificamos en base64 para Basic Auth
         String auth = username + ":" + token;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
@@ -54,35 +47,22 @@ public class projectService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-
-
-
-
         HttpEntity<Project> request = new HttpEntity<>(null, headers);
         ResponseEntity<Project> response = restTemplate.exchange(uri, HttpMethod.GET,request, Project.class);
         return response;
 
     }
 
-
-
-    public ResponseEntity<projectParse> sendProjectToGitMiner (projectParse project){
+    public ResponseEntity<ProjectBitbucketMiner> sendProjectToGitMiner (ProjectBitbucketMiner project){
         String uri = baseUriGitMiner;
-
         String auth = username + ":" + token;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
         String authHeader = "Basic " + encodedAuth;
-
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-        HttpEntity<projectParse> request = new HttpEntity<>(project, headers);
-        return restTemplate.exchange(uri, HttpMethod.POST,request, projectParse.class);
+        HttpEntity<ProjectBitbucketMiner> request = new HttpEntity<>(project, headers);
+        return restTemplate.exchange(uri, HttpMethod.POST,request, ProjectBitbucketMiner.class);
     }
-
-
-
 }

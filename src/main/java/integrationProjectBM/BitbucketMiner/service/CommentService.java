@@ -3,45 +3,37 @@ package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.comment.Comment;
 import integrationProjectBM.BitbucketMiner.model.issue.Issue;
-import integrationProjectBM.BitbucketMiner.response.commentResponse;
-import integrationProjectBM.BitbucketMiner.response.issueResponse;
+import integrationProjectBM.BitbucketMiner.response.PaginatedResponse;
+import integrationProjectBM.BitbucketMiner.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
 @Service
-public class commentService {
+public class CommentService {
     @Autowired
     RestTemplate restTemplate;
 
-    @Value("https://api.bitbucket.org/2.0/repositories/")
-    private String apipath;
+    @Value("${bitbucket.baseuri}")
+    private String baseUri;
 
-    @Value("ATBBUCLz82bW4fub2CuKLk4Dd76L398E9DF4")
+    @Value("${bitbucket.token}")
     private String token;
-    @Value("lorenvalderramaroman")
+    @Value("${bitbucket.username}")
     private String username;
 
-
-
-
-    public ResponseEntity<commentResponse> getcommentsI (String workspace, String repo_slug, String issue_id){
+    public ResponseEntity<PaginatedResponse<Comment>> getIssueComment(String workspace, String repoSlug, String issueId){
 
         //cuando quito el id no me sale ningun issue
 
-        String uri = apipath + workspace +"/" + repo_slug + "/issues/"+issue_id+"/comments";
-
-        // a partir de aqui es todo el lio con el token
-
-
-
+        String uri = baseUri + workspace +"/" + repoSlug + "/issues/"+issueId+"/comments";
         // Codificamos en base64 para Basic Auth
         String auth = username + ":" + token;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
@@ -51,27 +43,17 @@ public class commentService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-
-
-
-
         HttpEntity<Comment> request = new HttpEntity<>(null, headers);
-        ResponseEntity<commentResponse> response = restTemplate.exchange(uri, HttpMethod.GET,request, commentResponse.class);
+        ResponseEntity<PaginatedResponse<Comment>> response = restTemplate.exchange(uri, HttpMethod.GET,request, new ParameterizedTypeReference<PaginatedResponse<Comment>>() {});
         return response;
 
     }
 
-    public ResponseEntity<commentResponse> getcommentsC (String workspace, String repo_slug, String commit_hash){
+    public ResponseEntity<PaginatedResponse<Comment>> getCommitComments(String workspace, String repoSlug, String commitHash){
 
         //cuando quito el id no me sale ningun issue
 
-        String uri = apipath + workspace +"/" + repo_slug + "/commit/"+commit_hash+"/comments";
-
-        // a partir de aqui es todo el lio con el token
-
-
-
+        String uri = baseUri + workspace +"/" + repoSlug + "/commit/"+commitHash+"/comments";
         // Codificamos en base64 para Basic Auth
         String auth = username + ":" + token;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
@@ -81,26 +63,16 @@ public class commentService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-
-
-
-
         HttpEntity<Comment> request = new HttpEntity<>(null, headers);
-        ResponseEntity<commentResponse> response = restTemplate.exchange(uri, HttpMethod.GET,request, commentResponse.class);
+        ResponseEntity<PaginatedResponse<Comment>> response = restTemplate.exchange(uri, HttpMethod.GET,request, new ParameterizedTypeReference<PaginatedResponse<Comment>>() {});
         return response;
 
     }
 
-    public ResponseEntity<Comment> getCommentI (String workspace, String repo_slug, String issue_id,String comment_id){
+    public ResponseEntity<Comment> getIssueCommentById(String workspace, String repoSlug, String issueId, String commentId){
 
 
-        String uri = apipath + workspace +"/" + repo_slug + "/issues/"+issue_id+"/comments/" + comment_id;
-
-        // a partir de aqui es todo el lio con el token
-
-
-
+        String uri = baseUri + workspace +"/" + repoSlug + "/issues/"+issueId+"/comments/" + commentId;
         // Codificamos en base64 para Basic Auth
         String auth = username + ":" + token;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
@@ -110,27 +82,17 @@ public class commentService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-
-
-
-
         HttpEntity<Comment> request = new HttpEntity<>(null, headers);
         ResponseEntity<Comment> response = restTemplate.exchange(uri, HttpMethod.GET,request, Comment.class);
         return response;
     }
 
 
-    public ResponseEntity<Comment> getcommentC (String workspace, String repo_slug, String commit_hash, String comment_id){
+    public ResponseEntity<Comment> getCommitCommentById(String workspace, String repoSlug, String commitHash, String commentId){
 
         //cuando quito el id no me sale ningun issue
 
-        String uri = apipath + workspace +"/" + repo_slug + "/commit/"+commit_hash+"/comments/" + comment_id;
-
-        // a partir de aqui es todo el lio con el token
-
-
-
+        String uri = baseUri + workspace +"/" + repoSlug + "/commit/"+commitHash+"/comments/" + commentId;
         // Codificamos en base64 para Basic Auth
         String auth = username + ":" + token;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
@@ -140,15 +102,22 @@ public class commentService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-
-
-
-
         HttpEntity<Comment> request = new HttpEntity<>(null, headers);
         ResponseEntity<Comment> response = restTemplate.exchange(uri, HttpMethod.GET,request, Comment.class);
         return response;
-
     }
 
+    public List<Comment> getIssueCommentPaginated(String workspace, String repoSlug, String issueId, Integer maxPages) {
+        String initialUri = baseUri + workspace + "/" + repoSlug + "/issues/" + issueId + "/comments";
+        List<Comment> comments = Util.getPaginatedResources(
+                restTemplate,
+                username,
+                token,
+                initialUri,
+                new ParameterizedTypeReference<PaginatedResponse<Comment>>() {
+                },
+                maxPages
+        );
+        return comments;
+    }
 }

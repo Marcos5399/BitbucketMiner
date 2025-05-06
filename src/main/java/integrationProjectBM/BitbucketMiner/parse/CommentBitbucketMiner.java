@@ -1,12 +1,11 @@
 package integrationProjectBM.BitbucketMiner.parse;
 
 import integrationProjectBM.BitbucketMiner.model.comment.Comment;
-import integrationProjectBM.BitbucketMiner.model.user.User;
 
-public class commentParse {
+public class CommentBitbucketMiner {
     private String id;
     private String body;
-    private userParse author;
+    private UserBitbucketMiner author;
     private String createdAt;
     private String updatedAt;
 
@@ -26,11 +25,11 @@ public class commentParse {
         this.body = body;
     }
 
-    public userParse getAuthor() {
+    public UserBitbucketMiner getAuthor() {
         return author;
     }
 
-    public void setAuthor(userParse author) {
+    public void setAuthor(UserBitbucketMiner author) {
         this.author = author;
     }
 
@@ -48,20 +47,6 @@ public class commentParse {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-
-    public commentParse toCommentParse(Comment comment) {
-        commentParse cP = new commentParse();
-        userParse uP = new userParse();
-
-        cP.setId(comment.getId().toString());
-        cP.setAuthor(uP.userToUserParse(comment.getUser()));
-        cP.setBody(comment.getContent().getRaw());
-        cP.setCreatedAt(comment.getCreatedOn());
-        cP.setUpdatedAt(comment.getUpdatedOn().toString());
-        return cP;
-
     }
 
 }

@@ -1,8 +1,6 @@
 package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.commit.Commit;
-import integrationProjectBM.BitbucketMiner.response.commitResponse;
-import integrationProjectBM.BitbucketMiner.response.issueResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class commitServiceTest {
 
     @Autowired
-    private commitService service;
+    private CommitService service;
     @Test
     @DisplayName("Get all commits")
     void getAllCommits() {
-        ResponseEntity<commitResponse> response = service.getAllCommits("gentlero", "bitbucket-api");
-        commitResponse commits = response.getBody();
+        ResponseEntity<CommitResponse> response = service.getAllCommits("gentlero", "bitbucket-api");
+        CommitResponse commits = response.getBody();
         assertNotNull(commits);
         System.out.println(commits.getValues());
     }
