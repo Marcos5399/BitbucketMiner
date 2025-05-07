@@ -9,7 +9,8 @@ import integrationProjectBM.BitbucketMiner.model.user.User;
 public class Author {
 
     @JsonProperty("raw")
-    private String raw;
+    private String raw; // "raw": "John Doe <john@example.com>",
+
     @JsonProperty("type")
     private String type;
     @JsonProperty("user")  // user en GitMiner

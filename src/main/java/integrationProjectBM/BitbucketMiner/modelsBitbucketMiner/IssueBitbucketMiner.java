@@ -1,7 +1,4 @@
-package integrationProjectBM.BitbucketMiner.parse;
-
-import integrationProjectBM.BitbucketMiner.model.issue.Issue;
-import integrationProjectBM.BitbucketMiner.service.CommentService;
+package integrationProjectBM.BitbucketMiner.modelsBitbucketMiner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +8,47 @@ public class IssueBitbucketMiner {
     private String title;
     private String description;
     private String state;
-    private String createdAt;
-    private String updatedAt;
-    private String closedAt;
+    private String created_at;
+    private String updated_at;
+    private String closed_at;
     private List<String> labels;
     private UserBitbucketMiner author;
     private UserBitbucketMiner assignee;
     private Integer votes;
-    private String webUrl;
     private List<CommentBitbucketMiner> comments;
+
+    public IssueBitbucketMiner(String id, String title, String description,
+                            String state, String created_at, String updated_at, String closed_at,
+                            List<String> labels, Integer votes, UserBitbucketMiner author, UserBitbucketMiner assignee, List<CommentBitbucketMiner> comments) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.state = state;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.closed_at = closed_at;
+        this.labels = labels;
+        this.votes = votes;
+        this.author = author;
+        this.assignee = assignee;
+        this.comments = comments;
+    }
+
+    // Constructor vacío
+    public IssueBitbucketMiner(){
+        this.id = "";
+        this.title = "";
+        this.description = "";
+        this.state = "";
+        this.created_at = "";
+        this.updated_at = "";
+        this.closed_at = "";
+        this.labels = new ArrayList<String>();
+        this.votes = 0;
+        this.author = new UserBitbucketMiner();
+        this.assignee = new UserBitbucketMiner();
+        this.comments = new ArrayList();
+    }
 
     public String getId() {
         return id;
@@ -53,28 +82,28 @@ public class IssueBitbucketMiner {
         this.state = state;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public String getClosedAt() {
-        return closedAt;
+    public String getClosed_at() {
+        return closed_at;
     }
 
-    public void setClosedAt(String closedAt) {
-        this.closedAt = closedAt;
+    public void setClosed_at(String closed_at) {
+        this.closed_at = closed_at;
     }
 
     public List<String> getLabels() {
@@ -107,14 +136,6 @@ public class IssueBitbucketMiner {
 
     public void setVotes(Integer votes) {
         this.votes = votes;
-    }
-
-    public String getWebUrl() {
-        return webUrl;
-    }
-
-    public void setWebUrl(String webUrl) {
-        this.webUrl = webUrl;
     }
 
     public List<CommentBitbucketMiner> getComments() {

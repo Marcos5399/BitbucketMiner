@@ -1,4 +1,4 @@
-package integrationProjectBM.BitbucketMiner.parse;
+package integrationProjectBM.BitbucketMiner.modelsBitbucketMiner;
 
 import integrationProjectBM.BitbucketMiner.model.project.Project;
 import integrationProjectBM.BitbucketMiner.service.ProjectService;
@@ -17,7 +17,6 @@ class projectParseTest {
     @DisplayName("Project parse ")
     void toProjectParse() {
 
-        ProjectBitbucketMiner test = new ProjectBitbucketMiner();
         Project project = service.getProject("gentlero","bitbucket-api").getBody();
         System.out.println(project);
     }

@@ -1,4 +1,4 @@
-package integrationProjectBM.BitbucketMiner.parse;
+package integrationProjectBM.BitbucketMiner.modelsBitbucketMiner;
 
 import integrationProjectBM.BitbucketMiner.model.commit.Commit;
 import integrationProjectBM.BitbucketMiner.service.CommitService;

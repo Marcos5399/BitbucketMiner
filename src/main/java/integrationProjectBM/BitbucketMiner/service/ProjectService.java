@@ -3,7 +3,7 @@ package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.project.Project;
 
-import integrationProjectBM.BitbucketMiner.parse.ProjectBitbucketMiner;
+import integrationProjectBM.BitbucketMiner.modelsBitbucketMiner.ProjectBitbucketMiner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

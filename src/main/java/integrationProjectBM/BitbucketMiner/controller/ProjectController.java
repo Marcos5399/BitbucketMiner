@@ -1,10 +1,11 @@
 
 package integrationProjectBM.BitbucketMiner.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import integrationProjectBM.BitbucketMiner.model.project.Project;
-import integrationProjectBM.BitbucketMiner.parse.CommitBitbucketMiner;
-import integrationProjectBM.BitbucketMiner.parse.IssueBitbucketMiner;
-import integrationProjectBM.BitbucketMiner.parse.ProjectBitbucketMiner;
+import integrationProjectBM.BitbucketMiner.modelsBitbucketMiner.CommitBitbucketMiner;
+import integrationProjectBM.BitbucketMiner.modelsBitbucketMiner.IssueBitbucketMiner;
+import integrationProjectBM.BitbucketMiner.modelsBitbucketMiner.ProjectBitbucketMiner;
 import integrationProjectBM.BitbucketMiner.service.CommentService;
 import integrationProjectBM.BitbucketMiner.service.CommitService;
 import integrationProjectBM.BitbucketMiner.service.IssueService;
@@ -57,9 +58,6 @@ public class ProjectController {
         List<IssueBitbucketMiner> issues = issueService.getIssuesPages(workspace, repoSlug,maxPages).stream().map(i-> issueFormatter(i,commentService,workspace, repoSlug, maxPages)).toList().subList(0,nIssues);
 
     return projectFormatter(project,commits,issues);
-
-
-
     }
 
     @PostMapping("/{workspace}/{repoSlug}")
@@ -75,8 +73,7 @@ public class ProjectController {
         List<IssueBitbucketMiner> issues = issueService.getIssuesPages(workspace, repoSlug,maxPages).stream().map(i-> issueFormatter(i,commentService,workspace, repoSlug, maxPages)).toList().subList(0,nIssues);
 
         ProjectBitbucketMiner ProjectBitbucketMiner = projectFormatter(project,commits,issues);
-
+        System.out.println("Web URL: " + ProjectBitbucketMiner.getWeb_url()); //debug
         return projectService.sendProjectToGitMiner(ProjectBitbucketMiner).getBody();
     }
-
 }

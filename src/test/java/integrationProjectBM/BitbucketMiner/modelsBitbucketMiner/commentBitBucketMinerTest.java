@@ -1,4 +1,4 @@
-package integrationProjectBM.BitbucketMiner.parse;
+package integrationProjectBM.BitbucketMiner.modelsBitbucketMiner;
 
 import integrationProjectBM.BitbucketMiner.model.comment.Comment;
 import integrationProjectBM.BitbucketMiner.service.CommentService;
