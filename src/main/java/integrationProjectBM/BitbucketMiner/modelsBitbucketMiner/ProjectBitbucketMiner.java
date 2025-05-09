@@ -67,6 +67,29 @@ public class ProjectBitbucketMiner {
         this.issues = issues;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ProjectBitbucketMiner.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("id");
+        sb.append('=');
+        sb.append(((this.id == null)?"<null>":this.id));
+        sb.append(',');
+        sb.append("name");
+        sb.append('=');
+        sb.append(((this.name == null)?"<null>":this.name));
+        sb.append(',');
+        sb.append("web_url");
+        sb.append('=');
+        sb.append(((this.web_url == null)?"<null>":this.web_url));
+        sb.append(',');
+        if (sb.charAt((sb.length()- 1)) == ',') {
+            sb.setCharAt((sb.length()- 1), ']');
+        } else {
+            sb.append(']');
+        }
+        return sb.toString();
+    }
 }
 
 

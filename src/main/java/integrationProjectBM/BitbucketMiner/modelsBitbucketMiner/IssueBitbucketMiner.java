@@ -146,4 +146,42 @@ public class IssueBitbucketMiner {
         this.comments = comments;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(IssueBitbucketMiner.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("id");
+        sb.append('=');
+        sb.append(((this.id == null)?"<null>":this.id));
+        sb.append(',');
+        sb.append("title");
+        sb.append('=');
+        sb.append(((this.title == null)?"<null>":this.title));
+        sb.append(',');
+        sb.append("description");
+        sb.append('=');
+        sb.append(((this.description == null)?"<null>":this.description));
+        sb.append(',');
+        sb.append("state");
+        sb.append('=');
+        sb.append(((this.state == null)?"<null>":this.state));
+        sb.append(',');
+        sb.append("created_at");
+        sb.append('=');
+        sb.append(((this.created_at == null)?"<null>":this.created_at));
+        sb.append(',');
+        sb.append("updated_at");
+        sb.append('=');
+        sb.append(((this.updated_at == null)?"<null>":this.updated_at));
+        sb.append(',');
+        sb.append("closed_at");
+        sb.append('=');
+        sb.append(((this.closed_at == null)?"<null>":this.closed_at));
+        if (sb.charAt((sb.length()- 1)) == ',') {
+            sb.setCharAt((sb.length()- 1), ']');
+        } else {
+            sb.append(']');
+        }
+        return sb.toString();
+    }
 }

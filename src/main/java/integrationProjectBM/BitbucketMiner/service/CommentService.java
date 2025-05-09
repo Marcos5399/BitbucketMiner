@@ -29,6 +29,7 @@ public class CommentService {
     @Value("${bitbucket.username}")
     private String username;
 
+    // GET /repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments
     public ResponseEntity<PaginatedResponse<Comment>> getIssueComment(String workspace, String repoSlug, String issueId){
 
         //cuando quito el id no me sale ningun issue
@@ -49,9 +50,8 @@ public class CommentService {
 
     }
 
+    // GET /repositories/{workspace}/{repo_slug}/commit/{commit_hash}/comments
     public ResponseEntity<PaginatedResponse<Comment>> getCommitComments(String workspace, String repoSlug, String commitHash){
-
-        //cuando quito el id no me sale ningun issue
 
         String uri = baseUri + workspace +"/" + repoSlug + "/commit/"+commitHash+"/comments";
         // Codificamos en base64 para Basic Auth
@@ -68,9 +68,8 @@ public class CommentService {
         return response;
 
     }
-
+    // GET /repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments/{comment_id}
     public ResponseEntity<Comment> getIssueCommentById(String workspace, String repoSlug, String issueId, String commentId){
-
 
         String uri = baseUri + workspace +"/" + repoSlug + "/issues/"+issueId+"/comments/" + commentId;
         // Codificamos en base64 para Basic Auth
@@ -87,10 +86,8 @@ public class CommentService {
         return response;
     }
 
-
+    // GET /repositories/{workspace}/{repo_slug}/commit/{commit_hash}/comments/{comment_id}
     public ResponseEntity<Comment> getCommitCommentById(String workspace, String repoSlug, String commitHash, String commentId){
-
-        //cuando quito el id no me sale ningun issue
 
         String uri = baseUri + workspace +"/" + repoSlug + "/commit/"+commitHash+"/comments/" + commentId;
         // Codificamos en base64 para Basic Auth
@@ -107,6 +104,7 @@ public class CommentService {
         return response;
     }
 
+    // GET /repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments?page={page}&pagelen={pagelen}
     public List<Comment> getIssueCommentPaginated(String workspace, String repoSlug, String issueId, Integer maxPages) {
         String initialUri = baseUri + workspace + "/" + repoSlug + "/issues/" + issueId + "/comments";
         List<Comment> comments = Util.getPaginatedResources(

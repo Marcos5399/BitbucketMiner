@@ -64,4 +64,15 @@ public class UserBitbucketMiner {
     public void setWeb_url(String web_url) {
         this.web_url = web_url;
     }
+
+    @Override
+    public String toString() {
+        return "UserBitbucketMiner{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar_url='" + avatar_url + '\'' +
+                ", web_url='" + web_url + '\'' +
+                '}';
+    }
 }

@@ -63,4 +63,14 @@ public class CommentBitbucketMiner {
         this.updated_at = updated_at;
     }
 
+    @Override
+    public String toString() {
+        return "CommentBitbucketMiner{" +
+                "id='" + id + '\'' +
+                ", body='" + body + '\'' +
+                ", author=" + author +
+                ", created_at='" + created_at + '\'' +
+                ", updated_at='" + updated_at + '\'' +
+                '}';
+    }
 }

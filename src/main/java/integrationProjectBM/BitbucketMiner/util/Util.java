@@ -44,6 +44,7 @@ public class Util {
                 results.addAll(body.getValues());
             }
             nextPageUrl = (body != null) ? body.getNext() : null;
+            System.out.println("Página consultada: " + currentPage); // <--- AQUI
             currentPage++;
         }
 

@@ -87,4 +87,16 @@ public class CommitBitbucketMiner {
         this.web_url = web_url;
     }
 
+    @Override
+    public String toString() {
+        return "CommitBitbucketMiner{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", author_name='" + author_name + '\'' +
+                ", author_email='" + author_email + '\'' +
+                ", authored_date='" + authored_date + '\'' +
+                ", web_url='" + web_url + '\'' +
+                '}';
+    }
 }
