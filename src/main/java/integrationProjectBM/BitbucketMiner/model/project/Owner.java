@@ -1,26 +1,16 @@
 
 package integrationProjectBM.BitbucketMiner.model.project;
 
-import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "display_name",
-    "links",
-    "type",
-    "uuid",
-    "username"
-})
-@Generated("jsonschema2pojo")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Owner {
 
     @JsonProperty("display_name")
     private String displayName;
     @JsonProperty("links")
-    private Links links;
+    private Links__1 links;
     @JsonProperty("type")
     private String type;
     @JsonProperty("uuid")
@@ -39,12 +29,12 @@ public class Owner {
     }
 
     @JsonProperty("links")
-    public Links getLinks() {
+    public Links__1 getLinks() {
         return links;
     }
 
     @JsonProperty("links")
-    public void setLinks(Links links) {
+    public void setLinks(Links__1 links) {
         this.links = links;
     }
 

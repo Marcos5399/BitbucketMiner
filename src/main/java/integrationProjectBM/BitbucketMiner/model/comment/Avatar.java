@@ -4,6 +4,7 @@ package integrationProjectBM.BitbucketMiner.model.comment;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Avatar {
 
