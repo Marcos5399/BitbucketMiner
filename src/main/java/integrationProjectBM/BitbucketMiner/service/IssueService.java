@@ -2,6 +2,7 @@ package integrationProjectBM.BitbucketMiner.service;
 
 
 import integrationProjectBM.BitbucketMiner.model.issue.Issue;
+import integrationProjectBM.BitbucketMiner.response.BitbucketIssueResponse;
 import integrationProjectBM.BitbucketMiner.response.PaginatedResponse;
 import integrationProjectBM.BitbucketMiner.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,7 @@ public class IssueService {
 
 
     //coger un issue sin token funciona
-    public ResponseEntity<PaginatedResponse<Issue>> getIssues (String workspace, String repoSlug){
-
-        //cuando quito el id no me sale ningun issue
+    public ResponseEntity<BitbucketIssueResponse> getIssues (String workspace, String repoSlug){
 
         String uri = baseUri + workspace +"/" + repoSlug + "/issues";
         // Codificamos en base64 para Basic Auth
@@ -43,13 +42,11 @@ public class IssueService {
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<Issue> request = new HttpEntity<>(null, headers);
-        ResponseEntity<PaginatedResponse<Issue>> response = restTemplate.exchange(uri, HttpMethod.GET,request, new ParameterizedTypeReference<PaginatedResponse<Issue>>() {});
+        ResponseEntity<BitbucketIssueResponse> response = restTemplate.exchange(uri, HttpMethod.GET,request, BitbucketIssueResponse.class);
         return response;
     }
 
     public ResponseEntity<Issue> getIssue (String workspace, String repoSlug, String issueId){
-
-        //cuando quito el id no me sale ningun issue
 
         String uri = baseUri + workspace +"/" + repoSlug + "/issues/" + issueId;
         // Codificamos en base64 para Basic Auth
@@ -68,15 +65,18 @@ public class IssueService {
     }
 
 
-    public List<Issue> getIssuesPages(String workspace, String repoSlug, Integer maxPages) {
-        String initialUri = baseUri + workspace + "/" + repoSlug + "/issues";
-        List<Issue> issues = Util.getPaginatedResources(
-                restTemplate,
-                username,
-                token,
+    public List<Issue> getIssuesPages(String workspace, String repoSlug, Integer nIssues, Integer maxPages) {
+        String initialUri = baseUri + workspace + "/" + repoSlug + "/issues?pagelen=";
+        if (nIssues != null) {
+            initialUri += nIssues;
+        } else {
+            initialUri += 5; // Default value
+        }
+        List<Issue> issues = Util.getPaginatedBitbucketResources(
                 initialUri,
-                new ParameterizedTypeReference<PaginatedResponse<Issue>>() {},
-                maxPages
+                maxPages,
+                BitbucketIssueResponse.class,
+                restTemplate
         );
         return issues;
     }

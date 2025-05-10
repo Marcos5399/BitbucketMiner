@@ -1,6 +1,7 @@
 package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.comment.Comment;
+import integrationProjectBM.BitbucketMiner.response.BitbucketCommentResponse;
 import integrationProjectBM.BitbucketMiner.response.PaginatedResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +20,8 @@ class CommentServiceTest {
 
     @Test
     @DisplayName("Get comments for Issue")
-    void getIssueComment() {
-        ResponseEntity<PaginatedResponse<Comment>> response = commentService.getIssueComment("gentlero", "bitbucket-api", "42");
+    void getIssueComments() {
+        ResponseEntity<BitbucketCommentResponse> response = commentService.getIssueComments("gentlero", "bitbucket-api", "42");
         List<Comment> comments = response.getBody().getValues();
         assertFalse(comments.isEmpty(), "Comment list should not be empty");
         System.out.println(comments.size());
@@ -32,7 +33,7 @@ class CommentServiceTest {
     @Test
     @DisplayName("Get comments for Commit")
     void getCommitComments() {
-        ResponseEntity<PaginatedResponse<Comment>> response = commentService.getCommitComments("gentlero", "bitbucket-api", "3945f4821b8ed40978870ff848f676aabe830f18");
+        ResponseEntity<BitbucketCommentResponse> response = commentService.getCommitComments("gentlero", "bitbucket-api", "3945f4821b8ed40978870ff848f676aabe830f18");
         List<Comment> comments = response.getBody().getValues();
         assertFalse(comments.isEmpty(), "Comment list should not be empty");
         System.out.println(comments.size());
@@ -42,7 +43,7 @@ class CommentServiceTest {
     }
 
     @Test
-    void getIssueCommentById() {
+    void getIssueCommentsById() {
         ResponseEntity<Comment> response = commentService.getIssueCommentById("gentlero", "bitbucket-api", "1", "5835489");
         Comment comment = response.getBody();
         assertNotNull(comment, "Comment should not be null");
@@ -60,8 +61,8 @@ class CommentServiceTest {
     */
 
     @Test
-    void getIssueCommentPaginated() {
-        List<Comment> comments = commentService.getIssueCommentPaginated("gentlero", "bitbucket-api", "85", 2);
+    void getIssueCommentsPaginated() {
+        List<Comment> comments = commentService.getIssueCommentsPaginated("gentlero", "bitbucket-api", "85", 2);
         assertFalse(comments.isEmpty(), "Comment list should not be empty");
         System.out.println(comments.size());
         for (Comment comment : comments) {

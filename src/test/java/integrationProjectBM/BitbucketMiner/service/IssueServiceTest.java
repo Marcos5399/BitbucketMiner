@@ -1,6 +1,7 @@
 package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.issue.Issue;
+import integrationProjectBM.BitbucketMiner.response.BitbucketIssueResponse;
 import integrationProjectBM.BitbucketMiner.response.PaginatedResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class IssueServiceTest {
     @Test
     @DisplayName("Get all issues")
     void getIssues() {
-        ResponseEntity<PaginatedResponse<Issue>> responseEntity = issueService.getIssues("gentlero","bitbucket-api");
+        ResponseEntity<BitbucketIssueResponse> responseEntity = issueService.getIssues("gentlero","bitbucket-api");
         List<Issue> issues = responseEntity.getBody().getValues();
         assertNotNull(issues, "Issue list should not be null");
         assertFalse(issues.isEmpty(), "Issue list should not be empty");
@@ -42,7 +43,9 @@ class IssueServiceTest {
     @Test
     @DisplayName("Get all issues paginated")
     void getIssuesPages() {
-        List<Issue> issues = issueService.getIssuesPages("gentlero", "bitbucket-api", 2);
+        Integer nIssues = 5; // Probar con los valores 100(nIssues) y 7(maxPage) para comprobar que pasa cuando en una sola página caben todos los issues existentes
+        Integer maxPage = 3;
+        List<Issue> issues = issueService.getIssuesPages("gentlero", "bitbucket-api", nIssues, maxPage);
         assertNotNull( issues, "Issue list should not be null");
         assertFalse(issues.isEmpty(), "Issue list should not be empty");
         System.out.println("Total issues: " + issues.size());

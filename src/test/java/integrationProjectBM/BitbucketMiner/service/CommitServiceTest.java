@@ -1,6 +1,7 @@
 package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.commit.Commit;
+import integrationProjectBM.BitbucketMiner.response.BitbucketCommitResponse;
 import integrationProjectBM.BitbucketMiner.response.PaginatedResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class CommitServiceTest {
     @Test
     @DisplayName("Get all commits")
     void getAllCommits() {
-        ResponseEntity<PaginatedResponse<Commit>> response = commitService.getAllCommits("gentlero", "bitbucket-api");
+        ResponseEntity<BitbucketCommitResponse> response = commitService.getAllCommits("gentlero", "bitbucket-api");
         List<Commit> commits = response.getBody().getValues();
         assertFalse(commits.isEmpty(), "Commit list should not be empty");
         System.out.println("Número de commits:" + commits.size());
@@ -41,7 +42,9 @@ class CommitServiceTest {
     @Test
     @DisplayName("Get all commits paginated")
     void getAllCommitsPages() {
-        List<Commit> commits = commitService.getAllCommitsPages("gentlero", "bitbucket-api",2);
+        Integer nCommits = 7;
+        Integer maxPages = 3;
+        List<Commit> commits = commitService.getAllCommitsPages("gentlero", "bitbucket-api", nCommits, maxPages);
         assertFalse(commits.isEmpty(), "Commit list should not be empty");
         System.out.println("Número de commits:" + commits.size());
         for (Commit commit : commits) {

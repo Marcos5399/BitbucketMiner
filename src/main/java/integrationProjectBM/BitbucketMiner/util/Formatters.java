@@ -56,7 +56,7 @@ public class Formatters {
 
     public static IssueBitbucketMiner issueFormatter (Issue issue, CommentService commentService, String workspace, String repoSlug, Integer maxPages) {
 
-        List<CommentBitbucketMiner> comments = commentService.getIssueCommentPaginated(workspace,repoSlug,issue.getId().toString(), maxPages).stream().map(c-> commentFormatter(c)).toList();
+        List<CommentBitbucketMiner> comments = commentService.getIssueCommentsPaginated(workspace,repoSlug,issue.getId().toString(), maxPages).stream().map(c-> commentFormatter(c)).toList();
         List<String> aux = new ArrayList<>();
         aux.add(issue.getKind());
         aux.add(issue.getPriority());

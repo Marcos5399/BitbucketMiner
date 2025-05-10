@@ -2,6 +2,7 @@ package integrationProjectBM.BitbucketMiner.service;
 
 import integrationProjectBM.BitbucketMiner.model.commit.Commit;
 import integrationProjectBM.BitbucketMiner.model.issue.Issue;
+import integrationProjectBM.BitbucketMiner.response.BitbucketCommitResponse;
 import integrationProjectBM.BitbucketMiner.response.PaginatedResponse;
 import integrationProjectBM.BitbucketMiner.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CommitService {
 
 
     //coger un issue sin token funciona
-    public ResponseEntity<PaginatedResponse<Commit>> getAllCommits (String workspace, String repoSlug){
+    public ResponseEntity<BitbucketCommitResponse> getAllCommits (String workspace, String repoSlug){
 
         //cuando quito el id no me sale ningun issue
 
@@ -47,7 +48,7 @@ public class CommitService {
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<Issue> request = new HttpEntity<>(null, headers);
-        ResponseEntity<PaginatedResponse<Commit>> response = restTemplate.exchange(uri, HttpMethod.GET,request, new ParameterizedTypeReference<PaginatedResponse<Commit>>() {});
+        ResponseEntity<BitbucketCommitResponse> response = restTemplate.exchange(uri, HttpMethod.GET,request, BitbucketCommitResponse.class);
         return response;
 
     }
@@ -72,15 +73,18 @@ public class CommitService {
     }
 
 
-    public List<Commit> getAllCommitsPages (String workspace, String repoSlug, Integer maxPages){
-        String initialUri = baseUri + workspace +"/" + repoSlug + "/commits";
-        List<Commit> commits = Util.getPaginatedResources(
-                restTemplate,
-                username,
-                token,
-                initialUri,
-                new ParameterizedTypeReference<PaginatedResponse<Commit>>() {},
-                maxPages
+    public List<Commit> getAllCommitsPages (String workspace, String repoSlug, Integer nCommits, Integer maxPages){
+        String initialUri = baseUri + workspace +"/" + repoSlug + "/commits?pagelen=";
+        if (nCommits != null) {
+            initialUri += nCommits;
+        } else {
+            initialUri += 5; // Default value
+        }
+        List<Commit> commits = Util.getPaginatedBitbucketResources(
+               initialUri,
+               maxPages,
+               BitbucketCommitResponse.class,
+               restTemplate
         );
         return commits;
     }

@@ -2,12 +2,10 @@ package integrationProjectBM.BitbucketMiner.service;
 
 
 import integrationProjectBM.BitbucketMiner.model.comment.Comment;
-import integrationProjectBM.BitbucketMiner.model.issue.Issue;
-import integrationProjectBM.BitbucketMiner.response.PaginatedResponse;
+import integrationProjectBM.BitbucketMiner.response.BitbucketCommentResponse;
 import integrationProjectBM.BitbucketMiner.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,7 +28,7 @@ public class CommentService {
     private String username;
 
     // GET /repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments
-    public ResponseEntity<PaginatedResponse<Comment>> getIssueComment(String workspace, String repoSlug, String issueId){
+    public ResponseEntity<BitbucketCommentResponse> getIssueComments(String workspace, String repoSlug, String issueId){
 
         //cuando quito el id no me sale ningun issue
 
@@ -45,13 +43,13 @@ public class CommentService {
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<Comment> request = new HttpEntity<>(null, headers);
-        ResponseEntity<PaginatedResponse<Comment>> response = restTemplate.exchange(uri, HttpMethod.GET,request, new ParameterizedTypeReference<PaginatedResponse<Comment>>() {});
+        ResponseEntity<BitbucketCommentResponse> response = restTemplate.exchange(uri, HttpMethod.GET,request, BitbucketCommentResponse.class);
         return response;
 
     }
 
     // GET /repositories/{workspace}/{repo_slug}/commit/{commit_hash}/comments
-    public ResponseEntity<PaginatedResponse<Comment>> getCommitComments(String workspace, String repoSlug, String commitHash){
+    public ResponseEntity<BitbucketCommentResponse> getCommitComments(String workspace, String repoSlug, String commitHash){
 
         String uri = baseUri + workspace +"/" + repoSlug + "/commit/"+commitHash+"/comments";
         // Codificamos en base64 para Basic Auth
@@ -64,7 +62,7 @@ public class CommentService {
         headers.set("Authorization", authHeader);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<Comment> request = new HttpEntity<>(null, headers);
-        ResponseEntity<PaginatedResponse<Comment>> response = restTemplate.exchange(uri, HttpMethod.GET,request, new ParameterizedTypeReference<PaginatedResponse<Comment>>() {});
+        ResponseEntity<BitbucketCommentResponse> response = restTemplate.exchange(uri, HttpMethod.GET,request, BitbucketCommentResponse.class);
         return response;
 
     }
@@ -105,16 +103,13 @@ public class CommentService {
     }
 
     // GET /repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments?page={page}&pagelen={pagelen}
-    public List<Comment> getIssueCommentPaginated(String workspace, String repoSlug, String issueId, Integer maxPages) {
+    public List<Comment> getIssueCommentsPaginated(String workspace, String repoSlug, String issueId, Integer maxPages) {
         String initialUri = baseUri + workspace + "/" + repoSlug + "/issues/" + issueId + "/comments";
-        List<Comment> comments = Util.getPaginatedResources(
-                restTemplate,
-                username,
-                token,
+        List<Comment> comments = Util.getPaginatedBitbucketResources(
                 initialUri,
-                new ParameterizedTypeReference<PaginatedResponse<Comment>>() {
-                },
-                maxPages
+                maxPages,
+                BitbucketCommentResponse.class,
+                restTemplate
         );
         return comments;
     }

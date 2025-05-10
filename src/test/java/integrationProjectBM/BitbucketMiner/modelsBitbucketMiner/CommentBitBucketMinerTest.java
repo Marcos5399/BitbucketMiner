@@ -19,7 +19,7 @@ class CommentBitBucketMinerTest {
     @Test
     @DisplayName("Comment Formatter")
     void toCommentFormatter() {
-        List<Comment> comments = service.getIssueComment("gentlero", "bitbucket-api","87").getBody().getValues();
+        List<Comment> comments = service.getIssueComments("gentlero", "bitbucket-api","87").getBody().getValues();
         System.out.println(comments.stream().map(c-> Formatters.commentFormatter(c)).toList());
     }
 }

@@ -27,7 +27,7 @@ class ProjectServiceTest {
     CommentService commentService;
 
     @Test
-    @DisplayName("Get all projects")
+    @DisplayName("Get a project")
     void getProject() {
         ResponseEntity<Project> response = projectService.getProject("gentlero","bitbucket-api");
         Project project = response.getBody();

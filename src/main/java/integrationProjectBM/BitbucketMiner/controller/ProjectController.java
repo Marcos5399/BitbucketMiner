@@ -54,8 +54,8 @@ public class ProjectController {
 
 
         Project project = projectService.getProject(workspace, repoSlug).getBody();
-        List<CommitBitbucketMiner> commits= commitService.getAllCommitsPages(workspace, repoSlug,maxPages).stream().map(c-> commitFormatter(c)).toList().subList(0,nCommits);
-        List<IssueBitbucketMiner> issues = issueService.getIssuesPages(workspace, repoSlug,maxPages).stream().map(i-> issueFormatter(i,commentService,workspace, repoSlug, maxPages)).toList().subList(0,nIssues);
+        List<CommitBitbucketMiner> commits= commitService.getAllCommitsPages(workspace, repoSlug, nCommits, maxPages).stream().map(c-> commitFormatter(c)).toList();
+        List<IssueBitbucketMiner> issues = issueService.getIssuesPages(workspace, repoSlug, nIssues, maxPages).stream().map(i-> issueFormatter(i,commentService,workspace, repoSlug, maxPages)).toList();
 
     return projectFormatter(project,commits,issues);
     }
@@ -69,8 +69,8 @@ public class ProjectController {
 
 
         Project project = projectService.getProject(workspace, repoSlug).getBody();
-        List<CommitBitbucketMiner> commits= commitService.getAllCommitsPages(workspace, repoSlug,maxPages).stream().map(c-> commitFormatter(c)).toList().subList(0,nCommits);
-        List<IssueBitbucketMiner> issues = issueService.getIssuesPages(workspace, repoSlug,maxPages).stream().map(i-> issueFormatter(i,commentService,workspace, repoSlug, maxPages)).toList().subList(0,nIssues);
+        List<CommitBitbucketMiner> commits= commitService.getAllCommitsPages(workspace, repoSlug, nCommits, maxPages).stream().map(c-> commitFormatter(c)).toList();
+        List<IssueBitbucketMiner> issues = issueService.getIssuesPages(workspace, repoSlug, nIssues, maxPages).stream().map(i-> issueFormatter(i,commentService,workspace, repoSlug, maxPages)).toList();
 
         ProjectBitbucketMiner ProjectBitbucketMiner = projectFormatter(project,commits,issues);
         System.out.println("Web URL: " + ProjectBitbucketMiner.getWeb_url()); //debug
